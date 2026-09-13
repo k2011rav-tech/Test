@@ -1,0 +1,2939 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VING RUSSIA — Тестирование</title>
+
+<style>
+
+:root{
+    --yellow:#ffc72c;
+    --yellow-2:#ffda5b;
+    --yellow-dark:#d99f00;
+    --gold-glow:rgba(255,199,44,.22);
+    --bg:#05070a;
+    --bg-2:#090d14;
+    --card:rgba(14,18,27,.82);
+    --card-2:rgba(20,25,36,.72);
+    --border:rgba(255,255,255,.075);
+    --border-strong:rgba(255,199,44,.25);
+    --text:#f5f7fb;
+    --muted:#8993a6;
+    --muted-2:#616c7e;
+    --green:#43dfa0;
+    --red:#ff666f;
+    --blue:#7d9cff;
+    --radius:24px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+    min-height:100vh;
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:
+        radial-gradient(circle at 50% -20%,rgba(255,199,44,.14),transparent 34%),
+        radial-gradient(circle at 10% 55%,rgba(88,110,255,.035),transparent 28%),
+        radial-gradient(circle at 90% 80%,rgba(255,199,44,.035),transparent 25%),
+        linear-gradient(145deg,#040507 0%,#080b11 48%,#05070a 100%);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    z-index:-2;
+    width:520px;height:520px;
+    left:-280px;top:15%;
+    border-radius:50%;
+    background:rgba(255,199,44,.045);
+    filter:blur(100px);
+    pointer-events:none;
+}
+body::after{
+    content:"";
+    position:fixed;
+    z-index:-2;
+    width:520px;height:520px;
+    right:-280px;bottom:0;
+    border-radius:50%;
+    background:rgba(91,118,255,.035);
+    filter:blur(110px);
+    pointer-events:none;
+}
+
+.container{
+    position:relative;
+    width:100%;
+    max-width:960px;
+    min-height:100vh;
+    margin:auto;
+    padding:28px 18px 70px;
+}
+
+.container::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+
+.logo{
+    position:relative;
+    text-align:center;
+    margin:8px 0 30px;
+    animation:fadeDown .7s cubic-bezier(.22,.61,.36,1);
+}
+.logo::after{
+    content:"";
+    display:block;
+    width:58px;height:3px;
+    margin:12px auto 0;
+    border-radius:99px;
+    background:linear-gradient(90deg,transparent,var(--yellow),transparent);
+    box-shadow:0 0 20px var(--gold-glow);
+}
+.logo h1{
+    font-size:36px;
+    line-height:1;
+    font-weight:950;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+.logo span{
+    color:var(--yellow);
+    text-shadow:0 0 28px rgba(255,199,44,.24);
+}
+
+.card{
+    position:relative;
+    background:
+        linear-gradient(145deg,rgba(22,28,39,.9),rgba(8,11,17,.86));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:34px;
+    backdrop-filter:blur(28px) saturate(125%);
+    -webkit-backdrop-filter:blur(28px) saturate(125%);
+    box-shadow:
+        0 32px 90px rgba(0,0,0,.46),
+        0 4px 20px rgba(0,0,0,.2),
+        inset 0 1px 0 rgba(255,255,255,.035);
+    overflow:hidden;
+    animation:cardIn .5s cubic-bezier(.22,.61,.36,1);
+}
+.card::before{
+    content:"";
+    position:absolute;
+    left:12%;right:12%;top:0;
+    height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,199,44,.5),transparent);
+}
+.card::after{
+    content:"";
+    position:absolute;
+    width:180px;height:180px;
+    right:-110px;top:-120px;
+    border-radius:50%;
+    background:rgba(255,199,44,.045);
+    filter:blur(12px);
+    pointer-events:none;
+}
+
+.hidden{display:none!important}
+
+.start-screen{text-align:center}
+.start-screen h2,.position-screen h2{
+    font-size:30px;
+    line-height:1.2;
+    margin-bottom:11px;
+    font-weight:850;
+    letter-spacing:-.5px;
+}
+.description{
+    max-width:690px;
+    margin:0 auto 28px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.75;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+    margin-bottom:28px;
+}
+.info-box{
+    position:relative;
+    padding:20px 16px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:17px;
+    background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+    transition:transform .3s cubic-bezier(.22,.61,.36,1),border-color .3s,background .3s,box-shadow .3s;
+}
+.info-box:hover{
+    transform:translateY(-4px);
+    border-color:rgba(255,199,44,.24);
+    background:rgba(255,199,44,.045);
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+}
+.info-box b{
+    display:block;
+    color:var(--yellow);
+    font-size:24px;
+    line-height:1;
+    margin-bottom:8px;
+    font-weight:900;
+}
+.info-box span{color:var(--muted);font-size:12px}
+
+.main-btn{
+    position:relative;
+    border:0;
+    min-height:50px;
+    padding:15px 36px;
+    border-radius:14px;
+    color:#17130a;
+    background:linear-gradient(135deg,#ffe58a 0%,var(--yellow) 52%,#e7aa00 100%);
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:.2px;
+    cursor:pointer;
+    box-shadow:0 10px 32px rgba(255,199,44,.14),inset 0 1px 0 rgba(255,255,255,.4);
+    transition:transform .25s cubic-bezier(.22,.61,.36,1),box-shadow .25s,filter .25s;
+    overflow:hidden;
+}
+.main-btn::before{
+    content:"";
+    position:absolute;
+    top:0;bottom:0;
+    left:-45%;
+    width:35%;
+    transform:skewX(-18deg);
+    background:rgba(255,255,255,.35);
+    transition:left .55s ease;
+}
+.main-btn:hover:not(:disabled){
+    transform:translateY(-3px);
+    box-shadow:0 15px 42px rgba(255,199,44,.23),inset 0 1px 0 rgba(255,255,255,.5);
+    filter:saturate(1.08);
+}
+.main-btn:hover:not(:disabled)::before{left:125%}
+.main-btn:active:not(:disabled){transform:translateY(-1px) scale(.985)}
+.main-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+
+.admin-link{
+    width:max-content;
+    margin:19px auto 0;
+    color:#687386;
+    font-size:13px;
+    cursor:pointer;
+    transition:color .25s,transform .25s;
+}
+.admin-link:hover{color:var(--yellow);transform:translateY(-1px)}
+
+.position-subtitle{
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:25px;
+}
+.position-list{display:grid;gap:12px;margin-bottom:21px}
+.position-card{
+    position:relative;
+    width:100%;
+    padding:21px 54px 20px 21px;
+    border:1px solid rgba(255,255,255,.065);
+    border-radius:17px;
+    background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.014));
+    color:var(--text);
+    text-align:left;
+    cursor:pointer;
+    transition:transform .3s cubic-bezier(.22,.61,.36,1),border-color .3s,background .3s,box-shadow .3s;
+}
+.position-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(255,199,44,.25);
+    background:rgba(255,199,44,.045);
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+.position-card.selected{
+    border-color:rgba(255,199,44,.62);
+    background:linear-gradient(145deg,rgba(255,199,44,.105),rgba(255,199,44,.035));
+    box-shadow:0 12px 36px rgba(255,199,44,.08),inset 0 0 0 1px rgba(255,199,44,.06);
+}
+.position-card.selected::before{
+    content:"";
+    position:absolute;
+    left:0;top:18px;bottom:18px;
+    width:3px;
+    border-radius:0 8px 8px 0;
+    background:var(--yellow);
+    box-shadow:0 0 14px rgba(255,199,44,.45);
+}
+.position-title{font-size:16px;font-weight:850;margin-bottom:7px}
+.position-description{color:var(--muted);font-size:12px;line-height:1.55}
+.position-meta{margin-top:10px;color:var(--yellow);font-size:11px;font-weight:750}
+.position-radio{
+    position:absolute;
+    right:21px;top:50%;
+    width:19px;height:19px;
+    transform:translateY(-50%);
+    border:1px solid #4b5568;
+    border-radius:50%;
+    transition:.25s;
+}
+.position-card.selected .position-radio{
+    border-color:var(--yellow);
+    background:var(--yellow);
+    box-shadow:inset 0 0 0 4px #171c26,0 0 16px rgba(255,199,44,.18);
+}
+
+.top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+.category{
+    display:inline-flex;
+    align-items:center;
+    min-height:30px;
+    padding:7px 11px;
+    border:1px solid rgba(255,199,44,.13);
+    border-radius:999px;
+    color:var(--yellow);
+    background:rgba(255,199,44,.055);
+    font-size:10px;
+    font-weight:850;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+}
+.timer{
+    min-width:82px;
+    padding:10px 14px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:12px;
+    background:rgba(255,255,255,.045);
+    text-align:center;
+    font-size:14px;
+    font-weight:850;
+    font-variant-numeric:tabular-nums;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+    transition:.25s;
+}
+.timer.warning{
+    color:var(--red);
+    background:rgba(255,82,82,.075);
+    border-color:rgba(255,98,98,.2);
+    animation:pulseWarning 1s ease-in-out infinite;
+}
+
+.progress{
+    width:100%;
+    height:7px;
+    margin-bottom:25px;
+    overflow:hidden;
+    border-radius:99px;
+    background:rgba(255,255,255,.055);
+}
+.progress-bar{
+    width:0;height:100%;
+    border-radius:99px;
+    background:linear-gradient(90deg,#d99f00,var(--yellow),#ffe58a);
+    box-shadow:0 0 18px rgba(255,199,44,.24);
+    transition:width .5s cubic-bezier(.22,.61,.36,1);
+}
+.question-number{
+    color:var(--muted-2);
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+.question{
+    min-height:70px;
+    font-size:22px;
+    line-height:1.45;
+    font-weight:800;
+    letter-spacing:-.2px;
+    margin-bottom:24px;
+    animation:questionIn .35s cubic-bezier(.22,.61,.36,1);
+}
+.answers{display:grid;gap:11px}
+.answer{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    width:100%;
+    min-height:58px;
+    padding:17px 18px 17px 48px;
+    border:1px solid rgba(255,255,255,.065);
+    border-radius:14px;
+    background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.014));
+    color:#e7eaf0;
+    text-align:left;
+    font-size:14px;
+    line-height:1.45;
+    cursor:pointer;
+    transition:transform .22s cubic-bezier(.22,.61,.36,1),border-color .22s,background .22s,box-shadow .22s;
+}
+.answer::before{
+    content:"";
+    position:absolute;
+    left:17px;top:50%;
+    width:19px;height:19px;
+    transform:translateY(-50%);
+    border:1px solid #4b5568;
+    border-radius:7px;
+    transition:.22s;
+}
+.answer:hover:not(:disabled){
+    transform:translateX(4px);
+    border-color:rgba(255,199,44,.3);
+    background:rgba(255,199,44,.045);
+    box-shadow:0 8px 24px rgba(0,0,0,.16);
+}
+.answer:hover:not(:disabled)::before{
+    border-color:var(--yellow);
+    box-shadow:0 0 12px rgba(255,199,44,.12);
+}
+.answer.correct{
+    color:#c5f6df;
+    border-color:rgba(69,221,160,.48);
+    background:rgba(69,221,160,.085);
+}
+.answer.correct::before{
+    border-color:var(--green);
+    background:var(--green);
+    box-shadow:inset 0 0 0 5px rgba(15,43,34,.75);
+}
+.answer.wrong{
+    color:#ffc4c7;
+    border-color:rgba(255,98,98,.48);
+    background:rgba(255,98,98,.085);
+}
+.answer.wrong::before{border-color:var(--red);background:rgba(255,98,98,.18)}
+.answer:disabled{cursor:default}
+
+.bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-top:25px;
+}
+.progress-text{color:var(--muted-2);font-size:12px;font-weight:650}
+.next-btn{
+    min-width:108px;
+    padding:12px 25px;
+    border:1px solid rgba(255,199,44,.18);
+    border-radius:11px;
+    background:linear-gradient(135deg,#ffdc63,#e9b10b);
+    color:#17130a;
+    font-size:13px;
+    font-weight:850;
+    cursor:pointer;
+    transition:.25s;
+}
+.next-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 25px rgba(255,199,44,.16)}
+.next-btn:disabled{opacity:.3;cursor:not-allowed}
+
+.result{text-align:center}
+.result-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:86px;height:86px;
+    margin:0 auto 20px;
+    border:1px solid rgba(255,199,44,.2);
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffe58a,#e8ac08);
+    color:#17130a;
+    font-size:34px;
+    font-weight:950;
+    box-shadow:0 14px 45px rgba(255,199,44,.15);
+    animation:resultPop .55s cubic-bezier(.17,.89,.32,1.3);
+}
+.result h2{font-size:28px;line-height:1.2;margin-bottom:5px}
+.score{
+    margin:14px 0 7px;
+    color:var(--yellow);
+    font-size:48px;
+    line-height:1;
+    font-weight:950;
+    letter-spacing:-1px;
+    text-shadow:0 0 30px rgba(255,199,44,.12);
+}
+.result-position{color:var(--yellow);font-size:12px;font-weight:850;margin-bottom:13px}
+.result-text{max-width:580px;margin:0 auto 27px;color:var(--muted);font-size:14px;line-height:1.65}
+
+.input{
+    width:100%;
+    min-height:46px;
+    padding:13px 15px;
+    margin-bottom:11px;
+    outline:none;
+    border:1px solid rgba(255,255,255,.075);
+    border-radius:12px;
+    background:rgba(0,0,0,.22);
+    color:white;
+    font:inherit;
+    font-size:14px;
+    transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.input::placeholder{color:#5e6879}
+.input:focus{
+    border-color:rgba(255,199,44,.42);
+    background:rgba(255,199,44,.025);
+    box-shadow:0 0 0 4px rgba(255,199,44,.055);
+}
+.error{
+    color:#ff7a80;
+    margin-bottom:13px;
+    padding:10px 12px;
+    border:1px solid rgba(255,98,98,.12);
+    border-radius:10px;
+    background:rgba(255,98,98,.055);
+    font-size:12px;
+}
+
+.admin-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:25px;
+}
+.admin-header h2{font-size:25px}
+.logout{
+    padding:10px 15px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:10px;
+    background:rgba(255,255,255,.045);
+    color:#b9c0cc;
+    cursor:pointer;
+    transition:.25s;
+}
+.logout:hover{border-color:rgba(255,98,98,.2);color:#ff888e;background:rgba(255,98,98,.05)}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+    margin-bottom:23px;
+}
+.stat{
+    padding:17px;
+    border:1px solid rgba(255,255,255,.055);
+    border-radius:14px;
+    background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+}
+.stat b{display:block;color:var(--yellow);font-size:23px;line-height:1;margin-bottom:7px}
+.stat span{color:#727d8f;font-size:11px}
+
+.admin-actions{display:flex;gap:10px;margin-bottom:15px}
+.search{margin:0}
+.clear-btn{
+    min-width:92px;
+    padding:0 16px;
+    border:1px solid rgba(255,98,98,.13);
+    border-radius:11px;
+    background:rgba(255,82,82,.065);
+    color:#ff777d;
+    font-size:12px;
+    font-weight:750;
+    cursor:pointer;
+    transition:.25s;
+}
+.clear-btn:hover{background:rgba(255,82,82,.11);border-color:rgba(255,98,98,.25)}
+
+.results{display:grid;gap:9px}
+
+.lockout-section{
+    margin-top:28px;
+    padding-top:24px;
+    border-top:1px solid rgba(255,255,255,.06);
+}
+.lockout-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+}
+.lockout-title h3{font-size:15px}
+.lockout-title span{color:var(--muted-2);font-size:11px}
+.lockout-row{
+    display:grid;
+    grid-template-columns:1.3fr 1.1fr .9fr auto;
+    align-items:center;
+    gap:12px;
+    padding:14px 15px;
+    margin-bottom:9px;
+    border:1px solid rgba(255,98,98,.09);
+    border-radius:13px;
+    background:linear-gradient(145deg,rgba(255,98,98,.035),rgba(255,255,255,.012));
+}
+.lockout-badge{
+    display:inline-flex;
+    width:max-content;
+    padding:6px 9px;
+    border:1px solid rgba(255,98,98,.14);
+    border-radius:999px;
+    background:rgba(255,98,98,.06);
+    color:#ff858b;
+    font-size:10px;
+    font-weight:800;
+}
+.restore-btn{
+    min-height:38px;
+    padding:9px 13px;
+    border:1px solid rgba(69,221,160,.16);
+    border-radius:10px;
+    background:rgba(69,221,160,.06);
+    color:#8cebc2;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.22s;
+}
+.restore-btn:hover{
+    transform:translateY(-1px);
+    border-color:rgba(69,221,160,.3);
+    background:rgba(69,221,160,.1);
+}
+.lockout-empty{
+    padding:20px;
+    border:1px dashed rgba(255,255,255,.07);
+    border-radius:12px;
+    color:var(--muted-2);
+    text-align:center;
+    font-size:12px;
+}
+@media(max-width:700px){
+    .lockout-row{grid-template-columns:1fr 1fr;gap:10px}
+    .restore-btn{width:100%}
+}
+.result-row{
+    display:grid;
+    grid-template-columns:1.35fr 1.15fr .65fr .65fr .78fr;
+    align-items:center;
+    gap:10px;
+    padding:15px;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:13px;
+    background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.012));
+    transition:transform .22s,border-color .22s,background .22s;
+}
+.result-row:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,199,44,.13);
+    background:rgba(255,199,44,.025);
+}
+.player{font-size:14px;font-weight:750;word-break:break-word}
+.date{margin-top:4px;color:#606a7b;font-size:10px}
+.result-position-small{color:#aab2c0;font-size:11px;line-height:1.4}
+.passed{color:var(--green);font-weight:850}
+.failed{color:var(--red);font-weight:850}
+.empty{
+    padding:40px 20px;
+    text-align:center;
+    border:1px dashed rgba(255,255,255,.07);
+    border-radius:14px;
+    color:#687284;
+    font-size:13px;
+    background:rgba(255,255,255,.015);
+}
+
+@keyframes fadeDown{
+    from{opacity:0;transform:translateY(-16px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes cardIn{
+    from{opacity:0;transform:translateY(16px) scale(.985)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes questionIn{
+    from{opacity:0;transform:translateX(14px)}
+    to{opacity:1;transform:translateX(0)}
+}
+@keyframes resultPop{
+    0%{opacity:0;transform:scale(.55)}
+    75%{transform:scale(1.08)}
+    100%{opacity:1;transform:scale(1)}
+}
+@keyframes pulseWarning{
+    0%,100%{box-shadow:0 0 0 rgba(255,98,98,0)}
+    50%{box-shadow:0 0 20px rgba(255,98,98,.13)}
+}
+
+@media(max-width:700px){
+    .container{padding:18px 12px 45px}
+    .logo{margin:6px 0 24px}
+    .logo h1{font-size:28px;letter-spacing:3px}
+    .card{padding:23px 18px;border-radius:21px}
+    .start-screen h2,.position-screen h2{font-size:24px}
+    .description{font-size:13px;line-height:1.65}
+    .info{grid-template-columns:1fr;gap:9px}
+    .info-box{padding:17px}
+    .question{font-size:19px;min-height:0}
+    .answer{min-height:54px;padding:15px 15px 15px 46px;font-size:13px}
+    .top{align-items:flex-start}
+    .category{max-width:65%;line-height:1.2}
+    .bottom{flex-direction:column;align-items:stretch}
+    .progress-text{text-align:center}
+    .next-btn{width:100%;height:46px}
+    .admin-header{flex-direction:column;align-items:stretch}
+    .logout{width:100%}
+    .stats{grid-template-columns:1fr 1fr}
+    .admin-actions{flex-direction:column}
+    .clear-btn{height:46px}
+    .result-row{grid-template-columns:1fr 1fr;gap:12px}
+}
+@media(max-width:390px){
+    .stats{grid-template-columns:1fr}
+    .logo h1{font-size:25px}
+    .card{padding:21px 15px}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+    }
+}
+
+
+.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.modal-card{position:relative;width:min(430px,100%);padding:27px;border:1px solid rgba(255,255,255,.09);border-radius:22px;background:linear-gradient(145deg,rgba(23,29,40,.97),rgba(8,11,17,.98));box-shadow:0 30px 100px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04);animation:cardIn .3s ease}
+.modal-icon{display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin-bottom:16px;border-radius:14px;background:linear-gradient(145deg,#ffe58a,#e8ac08);color:#17130a;font-weight:950;box-shadow:0 8px 25px rgba(255,199,44,.14)}
+.modal-card h3{font-size:21px;margin-bottom:7px}.modal-card p{color:var(--muted);font-size:13px;line-height:1.55;margin-bottom:18px}
+.modal-card .input{margin-bottom:8px}.modal-error{color:#ff7a80;font-size:12px;margin-bottom:10px}.modal-actions{display:flex;gap:10px;justify-content:flex-end}.modal-actions .main-btn{min-height:44px;padding:12px 22px}.modal-actions .logout{min-height:44px}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+    <h1>VING <span>RUSSIA</span></h1>
+</div>
+
+
+<!-- START -->
+
+<div class="card start-screen" id="startScreen">
+
+    <h2>Тестирование</h2>
+
+    <p class="description">
+        Перед началом тестирования выберите должность,
+        на которую хотите пройти проверку знаний.
+        Вопросы проверяют знание правил, RP-терминов,
+        обязанностей и различных игровых ситуаций.
+    </p>
+
+    <div class="info">
+
+        <div class="info-box">
+            <b>3–5 мин</b>
+            <span>время тестирования</span>
+        </div>
+
+        <div class="info-box">
+            <b>15–30</b>
+            <span>вопросов</span>
+        </div>
+
+        <div class="info-box">
+            <b>70%</b>
+            <span>проходной балл</span>
+        </div>
+
+    </div>
+
+    <button class="main-btn" onclick="openPositionSelect()">
+        НАЧАТЬ ТЕСТ
+    </button>
+
+    <div class="admin-link" onclick="openAdminLogin()">
+        Панель администратора
+    </div>
+
+</div>
+
+
+<!-- POSITION -->
+
+<div class="card position-screen hidden" id="positionScreen">
+
+    <h2>На кого проходите?</h2>
+
+    <p class="position-subtitle">
+        Выберите должность для начала тестирования
+    </p>
+
+    <div class="position-list">
+
+        <div class="position-card"
+             id="position-leader"
+             onclick="selectPosition('leader')">
+
+            <div class="position-title">
+                👑 Лидер
+            </div>
+
+            <div class="position-description">
+                Проверка знаний обязанностей лидера,
+                RP-правил, работы с составом
+                и различных игровых ситуаций.
+            </div>
+
+            <div class="position-meta">
+                15 вопросов • 3 минуты
+            </div>
+
+            <div class="position-radio"></div>
+
+        </div>
+
+
+        <div class="position-card"
+             id="position-admin"
+             onclick="selectPosition('admin')">
+
+            <div class="position-title">
+                🛡️ Администратор
+            </div>
+
+            <div class="position-description">
+                Проверка знаний RP-терминов,
+                правил сервера, регламента наказаний
+                и основных обязанностей администратора.
+            </div>
+
+            <div class="position-meta">
+                15 вопросов • 3 минуты
+            </div>
+
+            <div class="position-radio"></div>
+
+        </div>
+
+
+        <div class="position-card"
+             id="position-highadmin"
+             onclick="selectPosition('highadmin')">
+
+            <div class="position-title">
+                ⭐ Высшая должность администратора
+            </div>
+
+            <div class="position-description">
+                Продвинутый тест по управлению администрацией,
+                сложным ситуациям, правилам сервера
+                и контролю работы младшей администрации.
+            </div>
+
+            <div class="position-meta">
+                30 вопросов • 5 минут
+            </div>
+
+            <div class="position-radio"></div>
+
+        </div>
+
+    </div>
+
+    <button class="main-btn"
+            id="continuePositionBtn"
+            onclick="continuePosition()"
+            disabled>
+        ПРОДОЛЖИТЬ
+    </button>
+
+    <div class="admin-link" onclick="backToStart()">
+        Вернуться назад
+    </div>
+
+</div>
+
+
+<!-- TEST -->
+
+<div class="card hidden" id="testScreen">
+
+    <div class="top">
+
+        <div class="category" id="category">
+            RP-ТЕРМИНЫ
+        </div>
+
+        <div class="timer" id="timer">
+            03:00
+        </div>
+
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="test-meta" style="display:flex;justify-content:space-between;gap:12px;margin:-11px 0 20px;color:var(--muted-2);font-size:11px;">
+        <span id="testPlayer">Игрок</span>
+        <span id="testPosition">Должность</span>
+    </div>
+
+    <div class="question-number" id="questionNumber">
+        Вопрос 1
+    </div>
+
+    <div class="question" id="question"></div>
+
+    <div class="answers" id="answers"></div>
+
+    <div class="bottom">
+
+        <div class="progress-text" id="progressText">
+            1 / 15
+        </div>
+
+        <button class="next-btn"
+                id="nextBtn"
+                disabled
+                onclick="nextQuestion()">
+            Далее
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="card result hidden" id="resultScreen">
+
+    <div class="result-icon" id="resultIcon">
+        ✓
+    </div>
+
+    <h2 id="resultTitle">
+        Тест завершён
+    </h2>
+
+    <div class="score" id="score">
+        0%
+    </div>
+
+    <div class="result-position" id="resultPosition"></div>
+
+    <p class="result-text" id="resultText"></p>
+
+    <button class="main-btn" onclick="location.reload()">
+        ВЕРНУТЬСЯ
+    </button>
+
+</div>
+
+
+<!-- ADMIN LOGIN -->
+
+<div class="card hidden" id="adminLogin">
+
+    <h2>Панель администратора</h2>
+
+    <p class="description">
+        Авторизуйтесь для просмотра результатов
+        тестирования.
+    </p>
+
+    <input class="input"
+           id="adminLoginInput"
+           placeholder="Логин"
+           autocomplete="off">
+
+    <input class="input"
+           id="adminPasswordInput"
+           type="password"
+           placeholder="Пароль">
+
+    <div class="error hidden" id="loginError">
+        Неверный логин или пароль.
+    </div>
+
+    <button class="main-btn" onclick="loginAdmin()">
+        ВОЙТИ
+    </button>
+
+    <div class="admin-link" onclick="backToStart()">
+        Вернуться назад
+    </div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div class="card hidden" id="adminPanel">
+
+    <div class="admin-header">
+
+        <h2>
+            Результаты тестирования
+        </h2>
+
+        <button class="logout" onclick="logoutAdmin()">
+            Выйти
+        </button>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <b id="totalResults">0</b>
+            <span>Всего попыток</span>
+        </div>
+
+        <div class="stat">
+            <b id="passedResults">0</b>
+            <span>Прошли</span>
+        </div>
+
+        <div class="stat">
+            <b id="failedResults">0</b>
+            <span>Не прошли</span>
+        </div>
+
+        <div class="stat">
+            <b id="averageScore">0%</b>
+            <span>Средний результат</span>
+        </div>
+
+    </div>
+
+    <div class="admin-actions">
+
+        <input class="input search"
+               id="searchInput"
+               placeholder="Поиск по нику..."
+               oninput="renderResults()">
+
+        <button class="clear-btn" onclick="clearResults()">
+            Очистить
+        </button>
+
+    </div>
+
+    <div class="results" id="results"></div>
+
+    <div class="lockout-section">
+        <div class="lockout-title">
+            <h3>Использованные шансы</h3>
+            <span>Игроки, вышедшие во время теста</span>
+        </div>
+        <div id="lockouts"></div>
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+
+const ADMIN_LOGIN = "admin";
+const ADMIN_PASSWORD = "V7mQ2xK9pL4z";
+
+
+
+
+const positions = {
+
+    leader: {
+        name:"Лидер",
+        questions:15,
+        time:180
+    },
+
+    admin: {
+        name:"Администратор",
+        questions:15,
+        time:180
+    },
+
+    highadmin: {
+        name:"Высшая должность администратора",
+        questions:30,
+        time:300
+    }
+
+};
+
+
+
+
+const leaderQuestions = [
+
+{
+category:"Лидерство",
+question:"Какова основная задача лидера фракции?",
+answers:[
+"Организовывать работу фракции, контролировать состав и соблюдать установленный регламент",
+"Получать личные преимущества за счёт должности",
+"Передавать управление фракцией друзьям",
+"Заниматься исключительно собственным персонажем"
+],
+correct:0
+},
+
+{
+category:"Лидерство",
+question:"Как следует поступить лидеру, если сотрудник неоднократно нарушает правила?",
+answers:[
+"Игнорировать нарушения, если сотрудник хорошо выполняет другие задачи",
+"Разобраться в ситуации и принять соответствующие меры согласно регламенту",
+"Наказать любого другого сотрудника вместо нарушителя",
+"Скрыть нарушение, чтобы не портить статистику фракции"
+],
+correct:1
+},
+
+{
+category:"RP-термины",
+question:"Что означает термин MG?",
+answers:[
+"Использование информации, полученной вне игрового процесса, в IC-ситуации",
+"Убийство игрока без причины",
+"Возвращение на место смерти",
+"Убийство участника своей организации"
+],
+correct:0
+},
+
+{
+category:"RP-термины",
+question:"Что означает термин DM?",
+answers:[
+"Использование информации из OOC в IC",
+"Нанесение урона или убийство игрока без достаточной RP-причины",
+"Убийство члена своей организации",
+"Возвращение после смерти для мести"
+],
+correct:1
+},
+
+{
+category:"Лидерство",
+question:"Может ли лидер предоставить своему другу должность с нарушением установленных требований?",
+answers:[
+"Да, если друг давно играет на сервере",
+"Да, если остальные сотрудники не возражают",
+"Нет, лидер обязан соблюдать установленные требования и правила",
+"Да, если это происходит только один раз"
+],
+correct:2
+},
+
+{
+category:"Ситуации",
+question:"Сотрудник подал жалобу на другого сотрудника. Как должен поступить лидер?",
+answers:[
+"Сразу наказать обвиняемого",
+"Разобраться в ситуации, изучить доказательства и только после этого принять решение",
+"Игнорировать жалобу, если оба сотрудника находятся в хорошем составе",
+"Наказать обоих участников независимо от обстоятельств"
+],
+correct:1
+},
+
+{
+category:"Лидерство",
+question:"Что должен учитывать лидер при управлении составом?",
+answers:[
+"Только собственное мнение",
+"Личные отношения с сотрудниками",
+"Правила сервера и внутренний регламент организации",
+"Только количество часов, проведённых сотрудником в игре"
+],
+correct:2
+},
+
+{
+category:"RP-термины",
+question:"Что означает OOC?",
+answers:[
+"Информация, относящаяся к реальному миру и находящаяся вне игрового персонажа",
+"Игровая информация персонажа",
+"Служебная команда лидера",
+"Внутреннее наказание администрации"
+],
+correct:0
+},
+
+{
+category:"Ситуации",
+question:"Вы обнаружили нарушение правил со стороны своего заместителя. Что необходимо сделать?",
+answers:[
+"Скрыть нарушение, чтобы сохранить стабильность фракции",
+"Разобраться в ситуации и принять решение в соответствии с правилами",
+"Наказать другого сотрудника вместо заместителя",
+"Проигнорировать нарушение из-за должности заместителя"
+],
+correct:1
+},
+
+{
+category:"Лидерство",
+question:"Обязан ли лидер знать правила сервера и внутренний регламент своей организации?",
+answers:[
+"Да, лидер должен хорошо знать применимые правила",
+"Нет, достаточно знать только команды",
+"Нет, правила должен знать только администратор",
+"Только во время проверки"
+],
+correct:0
+},
+
+{
+category:"RP-термины",
+question:"Что означает RK?",
+answers:[
+"Убийство союзника",
+"Использование информации вне игры",
+"Возвращение для мести за предыдущую смерть",
+"Нарушение игрового чата"
+],
+correct:2
+},
+
+{
+category:"Ситуации",
+question:"Игрок предлагает лидеру деньги за получение должности. Как правильно поступить?",
+answers:[
+"Согласиться, если сумма является достаточно большой",
+"Отказаться и действовать исключительно в рамках установленных правил",
+"Передать предложение своему заместителю",
+"Согласиться, если никто из игроков не узнает"
+],
+correct:1
+},
+
+{
+category:"Лидерство",
+question:"Как должен действовать лидер во время серьёзного конфликта внутри состава?",
+answers:[
+"Провоцировать участников конфликта",
+"Разобраться в ситуации и принять объективное решение",
+"Автоматически поддержать старшего по рангу",
+"Полностью проигнорировать конфликт"
+],
+correct:1
+},
+
+{
+category:"RP-термины",
+question:"Что означает TK?",
+answers:[
+"Убийство или нанесение урона участнику своей команды/организации",
+"Использование OOC-информации",
+"Возвращение после смерти",
+"Нарушение игрового чата"
+],
+correct:0
+},
+
+{
+category:"Лидерство",
+question:"На чём должно основываться решение лидера при спорной ситуации?",
+answers:[
+"На личных симпатиях",
+"На количестве денег у игрока",
+"На правилах, доказательствах и объективных обстоятельствах",
+"На мнении друзей лидера"
+],
+correct:2
+}
+
+];
+
+
+
+
+const adminQuestions = [
+
+{
+category:"RP-термины",
+question:"Что означает DM?",
+answers:[
+"Убийство или нанесение урона игроку без достаточной RP-причины",
+"Убийство участника своей организации",
+"Использование информации из реального мира",
+"Возвращение на место предыдущей смерти"
+],
+correct:0
+},
+
+{
+category:"RP-термины",
+question:"Что означает OOC?",
+answers:[
+"Игровую информацию персонажа",
+"Информацию, относящуюся к реальному миру и находящуюся вне игрового процесса",
+"Игровое нарушение",
+"Административную команду"
+],
+correct:1
+},
+
+{
+category:"RP-термины",
+question:"Что означает RK?",
+answers:[
+"Убийство на месте появления",
+"Убийство участника своей организации",
+"Возвращение для мести за предыдущую смерть",
+"Использование OOC-информации"
+],
+correct:2
+},
+
+{
+category:"RP-термины",
+question:"Что означает TK?",
+answers:[
+"Использование информации из OOC в IC",
+"Убийство или нанесение урона союзнику/члену своей команды",
+"Возвращение после смерти",
+"Выход из игры во время RP-ситуации"
+],
+correct:1
+},
+
+{
+category:"RP-термины",
+question:"Что означает SK?",
+answers:[
+"Убийство игрока на месте его появления",
+"Убийство администратора",
+"Использование информации из OOC",
+"Нарушение правил чата"
+],
+correct:0
+},
+
+{
+category:"Наказания",
+question:"Для чего применяется MUTE?",
+answers:[
+"Для временного ограничения возможности отправлять сообщения в чате",
+"Для полного удаления аккаунта",
+"Для отключения игрока от сервера",
+"Для перемещения игрока в другую локацию"
+],
+correct:0
+},
+
+{
+category:"Наказания",
+question:"Что происходит при применении KICK?",
+answers:[
+"Игрок получает блокировку аккаунта",
+"Игрок отключается от сервера",
+"Игрок теряет персонажа",
+"Игрок получает игровую валюту"
+],
+correct:1
+},
+
+{
+category:"Обязанности администратора",
+question:"Что является одной из основных обязанностей администратора?",
+answers:[
+"Следить за соблюдением правил и помогать игрокам в рамках своих полномочий",
+"Предоставлять преимущества знакомым игрокам",
+"Участвовать во всех RP-ситуациях",
+"Заниматься исключительно личными делами персонажа"
+],
+correct:0
+},
+
+{
+category:"Обязанности администратора",
+question:"Как должен поступить администратор, если нарушение совершил его знакомый?",
+answers:[
+"Проигнорировать нарушение",
+"Выдать наказание значительно меньше положенного",
+"Рассмотреть ситуацию объективно и руководствоваться правилами",
+"Удалить доказательства нарушения"
+],
+correct:2
+},
+
+{
+category:"Ситуации",
+question:"Игрок считает, что получил наказание ошибочно. Что должен сделать администратор?",
+answers:[
+"Сразу снять наказание без проверки",
+"Проверить обстоятельства ситуации и имеющиеся доказательства",
+"Заблокировать игрока за жалобу",
+"Игнорировать обращение"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Администратор не уверен, какое наказание соответствует нарушению. Что следует сделать?",
+answers:[
+"Выдать максимально возможное наказание",
+"Выдать случайное наказание",
+"Проверить действующий регламент или обратиться к старшей администрации",
+"Полностью проигнорировать нарушение"
+],
+correct:2
+},
+
+{
+category:"RP-термины",
+question:"Что означает MG?",
+answers:[
+"Использование информации, полученной вне игры, во время IC-ситуации",
+"Убийство без причины",
+"Убийство союзника",
+"Выход из игры"
+],
+correct:0
+},
+
+{
+category:"Администрирование",
+question:"Разрешено ли использовать административные полномочия для личной выгоды?",
+answers:[
+"Да, если выгода небольшая",
+"Да, если никто этого не заметит",
+"Нет, административные полномочия должны использоваться только по назначению",
+"Да, если игрок является другом"
+],
+correct:2
+},
+
+{
+category:"Администрирование",
+question:"Что является наиболее важным при рассмотрении жалобы?",
+answers:[
+"Личные отношения между участниками",
+"Доказательства, обстоятельства и действующие правила",
+"Уровень аккаунта игрока",
+"Количество игровой валюты"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Игрок неоднократно нарушает одно и то же правило. Что необходимо учитывать?",
+answers:[
+"Историю нарушений и действующий регламент наказаний",
+"Только последнее сообщение игрока",
+"Личные отношения администратора с игроком",
+"Только уровень персонажа"
+],
+correct:0
+}
+
+];
+
+
+
+
+const highAdminQuestions = [
+
+{
+category:"Высшая администрация",
+question:"Какова основная задача старшей администрации?",
+answers:[
+"Контролировать работу администрации, помогать в сложных ситуациях и следить за соблюдением регламента",
+"Предоставлять себе и знакомым игровые преимущества",
+"Участвовать во всех RP-ситуациях",
+"Самостоятельно изменять правила сервера"
+],
+correct:0
+},
+
+{
+category:"Высшая администрация",
+question:"Как следует разрешать конфликт между двумя администраторами?",
+answers:[
+"Поддержать администратора с более высокой должностью",
+"Разобраться объективно, изучить обстоятельства и доказательства",
+"Наказать обоих без выяснения обстоятельств",
+"Игнорировать конфликт"
+],
+correct:1
+},
+
+{
+category:"Администрирование",
+question:"Можно ли использовать административные возможности для решения личных конфликтов?",
+answers:[
+"Да, если конфликт произошёл вне сервера",
+"Да, если другая сторона первая начала спор",
+"Нет, административные полномочия нельзя использовать в личных интересах",
+"Да, если об этом никто не узнает"
+],
+correct:2
+},
+
+{
+category:"Администрирование",
+question:"Что необходимо учитывать при выборе наказания?",
+answers:[
+"Только тяжесть последствий для администратора",
+"Регламент, обстоятельства нарушения и имеющиеся доказательства",
+"Личные отношения с нарушителем",
+"Игровой уровень нарушителя"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Администратор регулярно превышает свои полномочия. Как должен поступить старший?",
+answers:[
+"Игнорировать ситуацию",
+"Проверить факты и принять меры согласно действующему регламенту",
+"Повысить администратора",
+"Скрыть информацию о нарушениях"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Поступила жалоба на администратора в связи с возможной предвзятостью. Ваши действия?",
+answers:[
+"Сразу снять администратора с должности",
+"Проверить ситуацию, логи, доказательства и обстоятельства",
+"Удалить жалобу",
+"Заблокировать заявителя"
+],
+correct:1
+},
+
+{
+category:"RP-термины",
+question:"Что означает MG?",
+answers:[
+"Использование информации из OOC в IC",
+"Убийство без причины",
+"Возвращение после смерти",
+"Убийство союзника"
+],
+correct:0
+},
+
+{
+category:"RP-термины",
+question:"Что означает DM?",
+answers:[
+"Убийство или нанесение урона без достаточной RP-причины",
+"Убийство участника своей организации",
+"Использование информации из OOC",
+"Выход из игры во время ситуации"
+],
+correct:0
+},
+
+{
+category:"RP-термины",
+question:"Что означает RK?",
+answers:[
+"Нарушение игрового чата",
+"Месть за предыдущую смерть с последующим возвращением",
+"Убийство союзника",
+"Использование OOC-информации"
+],
+correct:1
+},
+
+{
+category:"RP-термины",
+question:"Что означает TK?",
+answers:[
+"Убийство или нанесение урона союзнику/члену своей команды",
+"Убийство без RP-причины",
+"Возвращение после смерти",
+"Нарушение правил чата"
+],
+correct:0
+},
+
+{
+category:"Наказания",
+question:"Каково назначение MUTE?",
+answers:[
+"Ограничить возможность игрока отправлять сообщения в чате",
+"Отключить игрока от сервера",
+"Заблокировать аккаунт навсегда",
+"Изменить имя персонажа"
+],
+correct:0
+},
+
+{
+category:"Наказания",
+question:"Для чего используется KICK?",
+answers:[
+"Для временного отключения игрока от сервера",
+"Для выдачи предупреждения",
+"Для блокировки чата",
+"Для удаления персонажа"
+],
+correct:0
+},
+
+{
+category:"Контроль администрации",
+question:"Должен ли старший администратор контролировать работу младших администраторов?",
+answers:[
+"Да, это является одной из важных задач старшей администрации",
+"Нет, каждый администратор полностью независим",
+"Только если поступила жалоба",
+"Только во время массовых мероприятий"
+],
+correct:0
+},
+
+{
+category:"Контроль администрации",
+question:"Какой принцип должен соблюдаться при работе администрации?",
+answers:[
+"Приоритет личных отношений",
+"Объективность и одинаковое применение правил",
+"Предоставление преимуществ активным игрокам",
+"Максимально строгое наказание во всех случаях"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Администратор выдал наказание без достаточных доказательств. Что необходимо сделать?",
+answers:[
+"Оставить всё как есть",
+"Проверить обстоятельства и оценить обоснованность решения",
+"Удалить информацию о наказании",
+"Наказать заявителя"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Два игрока предоставляют противоположные версии одной ситуации. Что необходимо сделать?",
+answers:[
+"Поверить игроку, который обратился первым",
+"Проверить доступные доказательства и объективные данные",
+"Поверить более высокоуровневому игроку",
+"Наказать обоих"
+],
+correct:1
+},
+
+{
+category:"Администрирование",
+question:"Можно ли разглашать внутреннюю информацию администрации без соответствующего разрешения?",
+answers:[
+"Да, если информация кажется незначительной",
+"Да, своим знакомым",
+"Нет, если это запрещено внутренними правилами",
+"Да, любому игроку"
+],
+correct:2
+},
+
+{
+category:"Ситуации",
+question:"Что необходимо сделать перед применением серьёзного наказания к администратору?",
+answers:[
+"Проверить факты, доказательства и обстоятельства ситуации",
+"Сразу снять администратора",
+"Спросить мнение его друзей",
+"Удалить его историю наказаний"
+],
+correct:0
+},
+
+{
+category:"Ситуации",
+question:"Игрок предоставил видеозапись предполагаемого нарушения. Что следует сделать?",
+answers:[
+"Сразу наказать нарушителя без проверки",
+"Изучить запись и сопоставить её с обстоятельствами ситуации",
+"Удалить запись",
+"Игнорировать доказательство"
+],
+correct:1
+},
+
+{
+category:"Высшая администрация",
+question:"Что означает объективность при рассмотрении жалобы?",
+answers:[
+"Принятие решения на основании фактов и правил, а не личного отношения к участникам",
+"Поддержка более известного игрока",
+"Поддержка администратора в любой ситуации",
+"Выдача одинакового наказания всем участникам"
+],
+correct:0
+},
+
+{
+category:"Высшая администрация",
+question:"Как поступить, если конкретная ситуация неоднозначно описана в регламенте?",
+answers:[
+"Сразу выдать максимальное наказание",
+"Самостоятельно придумать новое правило",
+"Изучить аналогичные ситуации и при необходимости обратиться к вышестоящей администрации",
+"Всегда оправдывать игрока"
+],
+correct:2
+},
+
+{
+category:"Ситуации",
+question:"Администратор просит скрыть его нарушение. Как правильно поступить?",
+answers:[
+"Согласиться ради сохранения отношений",
+"Отказать и рассмотреть ситуацию в соответствии с правилами",
+"Удалить доказательства",
+"Передать информацию только его друзьям"
+],
+correct:1
+},
+
+{
+category:"Высшая администрация",
+question:"Какое действие является злоупотреблением административными полномочиями?",
+answers:[
+"Помощь игроку в рамках правил",
+"Рассмотрение жалобы",
+"Использование возможностей администрации для личной выгоды",
+"Проверка нарушения"
+],
+correct:2
+},
+
+{
+category:"Ситуации",
+question:"В жалобе недостаточно доказательств для однозначного решения. Что следует сделать?",
+answers:[
+"Выдать максимальное наказание",
+"Запросить дополнительные доказательства либо принять решение согласно регламенту",
+"Заблокировать автора жалобы",
+"Удалить жалобу без рассмотрения"
+],
+correct:1
+},
+
+{
+category:"Высшая администрация",
+question:"На чём должно основываться решение старшей администрации в спорной ситуации?",
+answers:[
+"На эмоциях",
+"На личных отношениях",
+"На доказательствах, правилах и объективных обстоятельствах",
+"На популярности участников"
+],
+correct:2
+},
+
+{
+category:"Контроль администрации",
+question:"Как должен старший администратор реагировать на ошибку младшего администратора?",
+answers:[
+"Помочь исправить ошибку и объяснить правильный порядок действий",
+"Скрыть её от руководства",
+"Наказать случайного игрока",
+"Полностью проигнорировать"
+],
+correct:0
+},
+
+{
+category:"Ситуации",
+question:"Администратор должен рассмотреть жалобу на своего близкого знакомого. Как лучше поступить при наличии конфликта интересов?",
+answers:[
+"Самостоятельно удалить жалобу",
+"Передать рассмотрение другому администратору",
+"Сразу оправдать знакомого",
+"Сразу наказать знакомого"
+],
+correct:1
+},
+
+{
+category:"Высшая администрация",
+question:"Что помогает поддерживать стабильную работу административного состава?",
+answers:[
+"Отсутствие контроля",
+"Чёткий регламент, обучение, контроль и единый подход к нарушениям",
+"Личные договорённости между администраторами",
+"Максимальное количество наказаний"
+],
+correct:1
+},
+
+{
+category:"Ситуации",
+question:"Игрок утверждает, что администрация относится к нему предвзято. Что следует проверить?",
+answers:[
+"Только его уровень",
+"Историю рассмотренных ситуаций, доказательства и действия администрации",
+"Количество денег игрока",
+"Список его друзей"
+],
+correct:1
+},
+
+{
+category:"Высшая администрация",
+question:"Как должен вести себя старший администратор при напряжённой ситуации?",
+answers:[
+"Спокойно, корректно и объективно",
+"Агрессивно, чтобы показать авторитет",
+"Поддерживать знакомых участников",
+"Игнорировать действующие правила"
+],
+correct:0
+},
+
+{
+category:"Высшая администрация",
+question:"Каким должен быть принцип применения наказаний?",
+answers:[
+"Наказание должно соответствовать нарушению и действующему регламенту",
+"Всегда следует использовать максимально строгое наказание",
+"Наказание должно зависеть от личного отношения администратора",
+"Всем игрокам необходимо выдавать одинаковое наказание независимо от ситуации"
+],
+correct:0
+}
+
+];
+
+
+
+
+let selectedPosition = null;
+let currentQuestion = 0;
+let score = 0;
+let selectedAnswer = false;
+let timeLeft = 180;
+let timerInterval = null;
+let activeQuestions = [];
+let playerNickname = "";
+let testInProgress = false;
+let testFinished = false;
+
+const LOCKOUT_KEY = "ving_test_lockouts";
+
+
+
+
+let currentQuestionData = null;
+
+
+
+
+function getResults() {
+
+    try {
+        const data = JSON.parse(
+            localStorage.getItem("ving_admin_results") || "[]"
+        );
+
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+
+}
+
+function saveResult(result) {
+
+    const results = getResults();
+
+    results.push(result);
+
+    localStorage.setItem(
+        "ving_admin_results",
+        JSON.stringify(results)
+    );
+
+}
+
+function normalizeNickname(nickname) {
+    return String(nickname || "").trim().toLowerCase();
+}
+
+function getLockouts() {
+    try {
+        const data = JSON.parse(localStorage.getItem(LOCKOUT_KEY) || "[]");
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveLockouts(lockouts) {
+    localStorage.setItem(LOCKOUT_KEY, JSON.stringify(lockouts));
+}
+
+function getPlayerLockout(nickname) {
+    const key = normalizeNickname(nickname);
+    return getLockouts().find(item => item.nicknameKey === key) || null;
+}
+
+function createLockout() {
+    if (!playerNickname || !selectedPosition || !testInProgress || testFinished) return;
+
+    const lockouts = getLockouts();
+    const nicknameKey = normalizeNickname(playerNickname);
+
+    if (!lockouts.some(item => item.nicknameKey === nicknameKey)) {
+        lockouts.push({
+            nickname: playerNickname,
+            nicknameKey,
+            position: positions[selectedPosition].name,
+            positionId: selectedPosition,
+            date: new Date().toLocaleString("ru-RU")
+        });
+        saveLockouts(lockouts);
+    }
+}
+
+function restoreChance(index) {
+    const lockouts = getLockouts();
+    const item = lockouts[index];
+    if (!item) return;
+
+    if (!confirm(`Восстановить шанс для ${item.nickname}?`)) return;
+
+    lockouts.splice(index, 1);
+    saveLockouts(lockouts);
+    renderLockouts();
+}
+
+function renderLockouts() {
+    const container = document.getElementById("lockouts");
+    if (!container) return;
+
+    const lockouts = getLockouts();
+    container.innerHTML = "";
+
+    if (!lockouts.length) {
+        container.innerHTML = `<div class="lockout-empty">Нет игроков с использованным шансом.</div>`;
+        return;
+    }
+
+    [...lockouts].reverse().forEach((item, reverseIndex) => {
+        const realIndex = lockouts.length - 1 - reverseIndex;
+        const row = document.createElement("div");
+        row.className = "lockout-row";
+        row.innerHTML = `
+            <div>
+                <div class="player">${escapeHTML(item.nickname)}</div>
+                <div class="date">${escapeHTML(item.date)}</div>
+            </div>
+            <div class="result-position-small">${escapeHTML(item.position || "—")}</div>
+            <div><span class="lockout-badge">ШАНС ИСПОЛЬЗОВАН</span></div>
+            <button class="restore-btn" onclick="restoreChance(${realIndex})">ВОССТАНОВИТЬ</button>
+        `;
+        container.appendChild(row);
+    });
+}
+
+
+
+
+function openPositionSelect() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+    selectedPosition = null;
+
+    document.querySelectorAll(".position-card")
+        .forEach(card => card.classList.remove("selected"));
+
+    document.getElementById("continuePositionBtn").disabled = true;
+
+    hideAll();
+
+    document
+        .getElementById("positionScreen")
+        .classList
+        .remove("hidden");
+
+}
+
+
+
+
+function selectPosition(position) {
+
+    selectedPosition = position;
+
+    document
+        .querySelectorAll(".position-card")
+        .forEach(card => {
+
+            card.classList.remove("selected");
+
+        });
+
+    document
+        .getElementById("position-" + position)
+        .classList
+        .add("selected");
+
+    document
+        .getElementById("continuePositionBtn")
+        .disabled = false;
+
+}
+
+
+
+
+function continuePosition() {
+
+    if (!selectedPosition)
+        return;
+
+    const modal = document.getElementById("nicknameModal");
+    const input = document.getElementById("nicknameInput");
+    const error = document.getElementById("nicknameError");
+
+    input.value = "";
+    error.classList.add("hidden");
+    modal.classList.remove("hidden");
+    modal.setAttribute("aria-hidden", "false");
+
+    setTimeout(() => input.focus(), 50);
+}
+
+function closeNicknameModal() {
+    const modal = document.getElementById("nicknameModal");
+    modal.classList.add("hidden");
+    modal.setAttribute("aria-hidden", "true");
+}
+
+function startTestFromModal() {
+
+    if (!selectedPosition)
+        return;
+
+    const input = document.getElementById("nicknameInput");
+    const error = document.getElementById("nicknameError");
+    const nickname = input.value.trim();
+
+    if (!nickname) {
+        error.textContent = "Введите игровой ник.";
+        error.classList.remove("hidden");
+        input.focus();
+        return;
+    }
+
+    if (nickname.length < 2) {
+        error.textContent = "Ник должен содержать минимум 2 символа.";
+        error.classList.remove("hidden");
+        input.focus();
+        return;
+    }
+
+    const normalizedNickname = normalizeNickname(nickname);
+    const existingLockout = getPlayerLockout(normalizedNickname);
+
+    if (existingLockout) {
+        error.textContent = "У вас уже использован шанс. Обратитесь к администрации для восстановления попытки.";
+        error.classList.remove("hidden");
+        return;
+    }
+
+    playerNickname = nickname.slice(0, 32);
+    closeNicknameModal();
+
+    const config =
+        positions[selectedPosition];
+
+    let pool;
+
+    if (selectedPosition === "leader") {
+
+        pool = leaderQuestions;
+
+    } else if (selectedPosition === "admin") {
+
+        pool = adminQuestions;
+
+    } else {
+
+        pool = highAdminQuestions;
+
+    }
+
+    activeQuestions =
+        shuffle([...pool])
+        .slice(0, config.questions);
+
+    currentQuestion = 0;
+    score = 0;
+    selectedAnswer = false;
+    testInProgress = true;
+    testFinished = false;
+
+    timeLeft = config.time;
+
+    hideAll();
+
+    document
+        .getElementById("testScreen")
+        .classList
+        .remove("hidden");
+
+    document.getElementById("testPlayer").textContent = playerNickname;
+    document.getElementById("testPosition").textContent = config.name;
+
+    document
+        .getElementById("timer")
+        .classList
+        .remove("warning");
+
+    updateTimerText();
+
+    showQuestion();
+
+    clearInterval(timerInterval);
+
+    timerInterval =
+        setInterval(updateTimer, 1000);
+
+}
+
+
+
+
+function shuffle(array) {
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+    return array;
+
+}
+
+
+
+
+
+
+function prepareQuestion(question) {
+
+    const answers =
+        question.answers.map(
+            (text,index) => ({
+                text:text,
+                correct:
+                    index === question.correct
+            })
+        );
+
+    shuffle(answers);
+
+    return {
+
+        category:
+            question.category,
+
+        question:
+            question.question,
+
+        answers:
+            answers
+
+    };
+
+}
+
+
+
+
+function updateTimer() {
+
+    timeLeft--;
+
+    updateTimerText();
+
+    if (timeLeft <= 30) {
+
+        document
+            .getElementById("timer")
+            .classList
+            .add("warning");
+
+    }
+
+    if (timeLeft <= 0) {
+
+        clearInterval(timerInterval);
+
+        finishTest(true);
+
+    }
+
+}
+
+
+function updateTimerText() {
+
+    const minutes =
+        Math.floor(timeLeft / 60);
+
+    const seconds =
+        timeLeft % 60;
+
+    document
+        .getElementById("timer")
+        .textContent =
+        String(minutes).padStart(2,"0")
+        +
+        ":"
+        +
+        String(seconds).padStart(2,"0");
+
+}
+
+
+
+
+function showQuestion() {
+
+    selectedAnswer = false;
+
+    
+
+    currentQuestionData =
+        prepareQuestion(
+            activeQuestions[currentQuestion]
+        );
+
+
+    document
+        .getElementById("category")
+        .textContent =
+        currentQuestionData.category;
+
+
+    document
+        .getElementById("questionNumber")
+        .textContent =
+        `Вопрос ${currentQuestion + 1} из ${activeQuestions.length}`;
+
+
+    document
+        .getElementById("question")
+        .textContent =
+        currentQuestionData.question;
+
+
+    document
+        .getElementById("progressText")
+        .textContent =
+        `${currentQuestion + 1} / ${activeQuestions.length}`;
+
+
+    document
+        .getElementById("progressBar")
+        .style.width =
+        `${
+            (
+                ((currentQuestion + 1) /
+                activeQuestions.length) * 100
+            )
+        }%`;
+
+
+    const answers =
+        document.getElementById("answers");
+
+    answers.innerHTML = "";
+
+
+    currentQuestionData.answers.forEach(
+        (answer,index) => {
+
+            const button =
+                document.createElement("button");
+
+            button.className = "answer";
+
+            button.textContent =
+                answer.text;
+
+            button.onclick =
+                () =>
+                    selectAnswer(
+                        button,
+                        index
+                    );
+
+            answers.appendChild(button);
+
+        }
+    );
+
+
+    document
+        .getElementById("nextBtn")
+        .disabled = true;
+
+}
+
+
+
+
+function selectAnswer(button,index) {
+
+    if (selectedAnswer)
+        return;
+
+    selectedAnswer = true;
+
+    const answer =
+        currentQuestionData.answers[index];
+
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+
+    buttons.forEach(
+        btn =>
+            btn.disabled = true
+    );
+
+
+    
+
+    if (answer.correct) {
+
+        button
+            .classList
+            .add("correct");
+
+        score++;
+
+    } else {
+
+        button
+            .classList
+            .add("wrong");
+
+
+        currentQuestionData.answers
+            .forEach(
+                (item,itemIndex) => {
+
+                    if (item.correct) {
+
+                        buttons[itemIndex]
+                            .classList
+                            .add("correct");
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    document
+        .getElementById("nextBtn")
+        .disabled = false;
+
+}
+
+
+
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (
+        currentQuestion >=
+        activeQuestions.length
+    ) {
+
+        finishTest(false);
+
+        return;
+
+    }
+
+    showQuestion();
+
+}
+
+
+
+
+function finishTest(timeExpired) {
+
+    if (!activeQuestions.length || testFinished)
+        return;
+
+    testFinished = true;
+    testInProgress = false;
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+
+    const total =
+        activeQuestions.length;
+
+    const percent =
+        Math.round(
+            (score / total) * 100
+        );
+
+    const passed =
+        percent >= 70 &&
+        !timeExpired;
+
+
+    saveResult({
+
+        nickname:
+            playerNickname,
+
+        position:
+            positions[selectedPosition].name,
+
+        positionId:
+            selectedPosition,
+
+        score:
+            score,
+
+        total:
+            total,
+
+        percent:
+            percent,
+
+        passed:
+            passed,
+
+        timeLeft:
+            timeLeft,
+
+        timeLimit:
+            positions[selectedPosition].time,
+
+        date:
+            new Date().toLocaleString("ru-RU")
+
+    });
+
+
+    hideAll();
+
+    document
+        .getElementById("resultScreen")
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById("score")
+        .textContent =
+        percent + "%";
+
+
+    document
+        .getElementById("resultPosition")
+        .textContent =
+        positions[selectedPosition].name;
+
+
+    const icon =
+        document.getElementById("resultIcon");
+
+    const title =
+        document.getElementById("resultTitle");
+
+    const text =
+        document.getElementById("resultText");
+
+
+    if (timeExpired) {
+
+        icon.textContent = "×";
+
+        title.textContent =
+            "Время вышло";
+
+        text.textContent =
+            `Правильных ответов: ${score} из ${total}. Тест автоматически завершён из-за окончания времени.`;
+
+        return;
+
+    }
+
+
+    if (passed) {
+
+        icon.textContent = "✓";
+
+        title.textContent =
+            "Тест успешно пройден!";
+
+        text.textContent =
+            `Правильных ответов: ${score} из ${total}. Вы набрали проходной балл 70% или выше.`;
+
+    } else {
+
+        icon.textContent = "×";
+
+        title.textContent =
+            "Тест не пройден";
+
+        text.textContent =
+            `Правильных ответов: ${score} из ${total}. Для прохождения необходимо набрать минимум 70%.`;
+
+    }
+
+}
+
+
+
+
+function hideAll() {
+
+    [
+        "startScreen",
+        "positionScreen",
+        "testScreen",
+        "resultScreen",
+        "adminLogin",
+        "adminPanel"
+    ]
+    .forEach(id => {
+
+        document
+            .getElementById(id)
+            .classList
+            .add("hidden");
+
+    });
+
+}
+
+
+
+
+function backToStart() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+    closeNicknameModal();
+
+    selectedPosition = null;
+    activeQuestions = [];
+    currentQuestion = 0;
+    score = 0;
+    selectedAnswer = false;
+    testInProgress = false;
+    testFinished = false;
+
+    document.querySelectorAll(".position-card")
+        .forEach(card => card.classList.remove("selected"));
+
+    document.getElementById("continuePositionBtn").disabled = true;
+
+    hideAll();
+
+    document
+        .getElementById("startScreen")
+        .classList
+        .remove("hidden");
+
+}
+
+
+
+
+function openAdminLogin() {
+
+    hideAll();
+
+    document
+        .getElementById("adminLogin")
+        .classList
+        .remove("hidden");
+
+}
+
+
+function loginAdmin() {
+
+    const login =
+        document
+            .getElementById("adminLoginInput")
+            .value;
+
+    const password =
+        document
+            .getElementById("adminPasswordInput")
+            .value;
+
+
+    if (
+        login === ADMIN_LOGIN &&
+        password === ADMIN_PASSWORD
+    ) {
+
+        document
+            .getElementById("loginError")
+            .classList
+            .add("hidden");
+
+        hideAll();
+
+        document
+            .getElementById("adminPanel")
+            .classList
+            .remove("hidden");
+
+        renderResults();
+
+    } else {
+
+        document
+            .getElementById("loginError")
+            .classList
+            .remove("hidden");
+
+    }
+
+}
+
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        const loginScreen = document.getElementById("adminLogin");
+        const modal = document.getElementById("nicknameModal");
+
+        if (!loginScreen.classList.contains("hidden")) {
+            loginAdmin();
+        } else if (modal && !modal.classList.contains("hidden")) {
+            startTestFromModal();
+        }
+    }
+
+    if (event.key === "Escape") {
+        const modal = document.getElementById("nicknameModal");
+        if (modal && !modal.classList.contains("hidden")) {
+            closeNicknameModal();
+        }
+    }
+});
+
+
+
+
+function logoutAdmin() {
+
+    document
+        .getElementById("adminPasswordInput")
+        .value = "";
+
+    backToStart();
+
+}
+
+
+
+
+function renderResults() {
+
+    const results =
+        getResults();
+
+
+    const search =
+        (
+            document
+                .getElementById("searchInput")
+                ?.value
+                .toLowerCase()
+        ) || "";
+
+
+    const filtered =
+        results.filter(result =>
+            String(result.nickname || "")
+                .toLowerCase()
+                .includes(search)
+        );
+
+
+    document
+        .getElementById("totalResults")
+        .textContent =
+        results.length;
+
+
+    const passed =
+        results.filter(
+            result => result.passed
+        ).length;
+
+
+    const failed =
+        results.length - passed;
+
+
+    document
+        .getElementById("passedResults")
+        .textContent =
+        passed;
+
+
+    document
+        .getElementById("failedResults")
+        .textContent =
+        failed;
+
+
+    const average =
+        results.length
+        ?
+        Math.round(
+            results.reduce(
+                (sum,result) =>
+                    sum + result.percent,
+                0
+            ) / results.length
+        )
+        :
+        0;
+
+
+    document
+        .getElementById("averageScore")
+        .textContent =
+        average + "%";
+
+
+    const container =
+        document.getElementById("results");
+
+    container.innerHTML = "";
+    renderLockouts();
+
+
+    if (!filtered.length) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Результатов пока нет
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    [...filtered]
+        .reverse()
+        .forEach(result => {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "result-row";
+
+
+            row.innerHTML = `
+
+                <div>
+
+                    <div class="player">
+                        ${escapeHTML(result.nickname)}
+                    </div>
+
+                    <div class="date">
+                        ${escapeHTML(result.date)}
+                    </div>
+
+                </div>
+
+                <div class="result-position-small">
+                    ${escapeHTML(result.position || "—")}
+                </div>
+
+                <div>
+                    ${result.score}/${result.total}
+                </div>
+
+                <div>
+
+                    <b class="${
+                        result.passed
+                        ? "passed"
+                        : "failed"
+                    }">
+
+                        ${result.percent}%
+
+                    </b>
+
+                </div>
+
+                <div class="${
+                    result.passed
+                    ? "passed"
+                    : "failed"
+                }">
+
+                    ${
+                        result.passed
+                        ? "ПРОШЁЛ"
+                        : "НЕ ПРОШЁЛ"
+                    }
+
+                </div>
+
+            `;
+
+
+            container.appendChild(row);
+
+        });
+
+}
+
+
+
+
+function clearResults() {
+
+    if (
+        !confirm(
+            "Удалить все результаты тестирования?"
+        )
+    )
+        return;
+
+
+    localStorage.removeItem(
+        "ving_admin_results"
+    );
+
+
+    renderResults();
+
+}
+
+
+
+
+function handleTestExit() {
+    if (!testInProgress || testFinished) return;
+    createLockout();
+}
+
+window.addEventListener("pagehide", handleTestExit);
+window.addEventListener("beforeunload", handleTestExit);
+
+
+
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+</script>
+
+
+<div class="modal hidden" id="nicknameModal" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeNicknameModal()"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="nicknameTitle">
+        <div class="modal-icon">V</div>
+        <h3 id="nicknameTitle">Перед началом теста</h3>
+        <p>Введите ваш игровой ник. Результат будет сохранён в панели администратора.</p>
+        <input class="input" id="nicknameInput" maxlength="32" autocomplete="off" placeholder="Игровой ник">
+        <div class="modal-error hidden" id="nicknameError">Введите игровой ник.</div>
+        <div class="modal-actions">
+            <button class="logout" onclick="closeNicknameModal()">Отмена</button>
+            <button class="main-btn" onclick="startTestFromModal()">НАЧАТЬ</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
